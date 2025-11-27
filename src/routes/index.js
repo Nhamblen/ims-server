@@ -6,7 +6,7 @@
  */
 
 // require statements
-const express = require('express');
+const express = require("express");
 const router = express.Router();
 
 /**
@@ -33,10 +33,10 @@ const router = express.Router();
  * //   "message": "Hello from the ETS server!"
  * // }
  */
-router.get('/', function(req, res, next) {
-  const appName = 'Inventory Management System';
+router.get("/", function (req, res, next) {
+  const appName = "Inventory Management System";
   res.send({
-    message: `Hello from the ${appName} server!`
+    message: `Hello from the ${appName} server!`,
   });
 });
 
