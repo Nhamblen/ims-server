@@ -14,12 +14,21 @@ require("dotenv").config(); // loads .env
 
 const app = express();
 app.use(express.json());
+
+// Mount the route being tested
 app.use("/api/inventory", listInventoryRoutes);
 
+/**
+ * Connect to the test database and test insert one inventory item (separate from inventory_items collection).
+ * This runs once before all tests.
+ */
 beforeAll(async () => {
   await mongoose.connect(process.env.MONGO_URI);
+
+  // Clear any previous data to avoid test pollution
   await InventoryItem.deleteMany();
 
+  // Insert a test record for validation
   await InventoryItem.insertMany([
     {
       categoryId: 1000,
@@ -32,6 +41,9 @@ beforeAll(async () => {
   ]);
 });
 
+/**
+ * Close the Mongo connection after the test suite finishes.
+ */
 afterAll(async () => {
   await mongoose.connection.close();
 });
