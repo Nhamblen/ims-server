@@ -14,4 +14,4 @@ const SupplierSchema = new mongoose.Schema({
   dateModified: { type: Date, default: Date.now },
 });
 
-module.exports = mongoose.model("Supplier", SupplierSchema);
+module.exports = mongoose.model("supplier", SupplierSchema);

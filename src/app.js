@@ -18,6 +18,15 @@ const indexRouter = require("./routes/index");
 // Variable declaration for the express app
 let app = express();
 
+const mongoose = require("mongoose");
+require("dotenv").config();
+
+// Connect to MongoDB Atlas
+mongoose
+  .connect(process.env.MONGO_URI)
+  .then(() => console.log("Connected to MongoDB Atlas"))
+  .catch((err) => console.error("MongoDB connection error:", err));
+
 // CORS configuration
 app.use((req, res, next) => {
   res.setHeader("Access-Control-Allow-Origin", "*"); // This allows all origins

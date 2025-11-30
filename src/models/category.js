@@ -13,4 +13,4 @@ const CategorySchema = new mongoose.Schema({
   dateModified: { type: Date, default: Date.now },
 });
 
-module.exports = mongoose.model("Category", CategorySchema);
+module.exports = mongoose.model("categories", CategorySchema);
