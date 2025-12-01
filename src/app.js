@@ -11,6 +11,7 @@ const cookieParser = require("cookie-parser");
 const logger = require("morgan");
 const { notFoundHandler, errorHandler } = require("./error-handler");
 const listInventoryRoutes = require("./routes/list_inventory");
+const createInventoryRoutes = require("./routes/create_inventory");
 
 // Importing the index router
 const indexRouter = require("./routes/index");
@@ -29,15 +30,15 @@ mongoose
 
 // CORS configuration
 app.use((req, res, next) => {
-  res.setHeader("Access-Control-Allow-Origin", "*"); // This allows all origins
+  res.setHeader("Access-Control-Allow-Origin", "*");
   res.setHeader(
     "Access-Control-Allow-Methods",
     "GET, POST, PUT, DELETE, OPTIONS"
-  ); // Allowed request methods
+  );
   res.setHeader(
     "Access-Control-Allow-Headers",
     "Origin, X-Requested-With, Content-Type, Accept"
-  ); // Allowed headers
+  );
   next();
 });
 
@@ -49,7 +50,8 @@ app.use(cookieParser());
 
 // Routing configuration
 app.use("/api", indexRouter);
-app.use("/api/inventory", listInventoryRoutes);
+app.use("/api/inventory", listInventoryRoutes);  // GET /api/inventory
+app.use("/api/inventory", createInventoryRoutes); // POST /api/inventory
 
 // Use the error handling middleware
 app.use(notFoundHandler);
