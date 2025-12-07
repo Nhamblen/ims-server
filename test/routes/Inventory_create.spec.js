@@ -36,15 +36,13 @@ describe("POST /api/inventory", () => {
     const newItem = {
       categoryId: 1,
       supplierId: 100,
-      name: "Test Item 1",
-      description: "A test inventory item",
-      quantity: 50,
-      price: 9.99,
+      name: "Laptop",
+      description: "Lenovo laptops",
+      quantity: 10,
+      price: 699.99,
     };
 
-    const res = await request(app)
-      .post("/api/inventory")
-      .send(newItem);
+    const res = await request(app).post("/api/inventory").send(newItem);
 
     // Expect a successful creation (change to 200 if your route uses 200 instead)
     expect(res.status).toBe(201);
@@ -67,9 +65,7 @@ describe("POST /api/inventory", () => {
       price: 9.99,
     };
 
-    const res = await request(app)
-      .post("/api/inventory")
-      .send(badItem);
+    const res = await request(app).post("/api/inventory").send(badItem);
 
     expect(res.status).toBe(400);
     expect(res.body).toHaveProperty("message");
@@ -77,18 +73,16 @@ describe("POST /api/inventory", () => {
 
   it("should return 409 when an item with the same name already exists", async () => {
     const item = {
-      categoryId: 1,
-      supplierId: 100,
-      name: "Duplicate Name Item",
-      description: "First one",
-      quantity: 20,
-      price: 4.99,
+      categoryId: 2,
+      supplierId: 200,
+      name: "Nightstand",
+      description: "Authentic wood nightstand",
+      quantity: 10,
+      price: 699.99,
     };
 
     // First create succeeds
-    const firstRes = await request(app)
-      .post("/api/inventory")
-      .send(item);
+    const firstRes = await request(app).post("/api/inventory").send(item);
 
     expect(firstRes.status).toBe(201);
 
