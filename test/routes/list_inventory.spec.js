@@ -31,12 +31,20 @@ beforeAll(async () => {
   // Insert a test record for validation
   await InventoryItem.insertMany([
     {
-      categoryId: 1000,
-      supplierId: 1,
-      name: "Test Item 1",
-      description: "Test description",
+      categoryId: 1,
+      supplierId: 100,
+      name: "Laptop",
+      description: "Lenovo laptops",
       quantity: 10,
-      price: 199.99,
+      price: 699.99,
+    },
+    {
+      categoryId: 2,
+      supplierId: 200,
+      name: "Nightstand",
+      description: "Authentic wood nightstand",
+      quantity: 10,
+      price: 699.99,
     },
   ]);
 });
