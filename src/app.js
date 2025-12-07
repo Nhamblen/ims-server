@@ -12,6 +12,7 @@ const logger = require("morgan");
 const { notFoundHandler, errorHandler } = require("./error-handler");
 const listInventoryRoutes = require("./routes/list_inventory");
 const createInventoryRoutes = require("./routes/create_inventory");
+const readInventoryRoutes = require("./routes/read_inventory");
 
 // Importing the index router
 const indexRouter = require("./routes/index");
@@ -52,6 +53,7 @@ app.use(cookieParser());
 app.use("/api", indexRouter);
 app.use("/api/inventory", listInventoryRoutes);  // GET /api/inventory
 app.use("/api/inventory", createInventoryRoutes); // POST /api/inventory
+app.use("/api/inventory", readInventoryRoutes);   // GET /api/inventory/:id
 
 // Use the error handling middleware
 app.use(notFoundHandler);
