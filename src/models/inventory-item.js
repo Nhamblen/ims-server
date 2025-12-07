@@ -16,4 +16,8 @@ const InventoryItemSchema = new mongoose.Schema({
   dateModified: { type: Date, default: Date.now },
 });
 
-module.exports = mongoose.model("inventory_items", InventoryItemSchema);
+module.exports = mongoose.model(
+  "inventoryitems",
+  InventoryItemSchema,
+  "inventory_items"
+);

@@ -13,6 +13,7 @@ const { notFoundHandler, errorHandler } = require("./error-handler");
 const listInventoryRoutes = require("./routes/list_inventory");
 const createInventoryRoutes = require("./routes/create_inventory");
 const readInventoryRoutes = require("./routes/read_inventory");
+const updateInventoryRoutes = require("./routes/inventory_update");
 
 // Importing the index router
 const indexRouter = require("./routes/index");
@@ -23,11 +24,13 @@ let app = express();
 const mongoose = require("mongoose");
 require("dotenv").config();
 
-// Connect to MongoDB Atlas
-mongoose
-  .connect(process.env.MONGO_URI)
-  .then(() => console.log("Connected to MongoDB Atlas"))
-  .catch((err) => console.error("MongoDB connection error:", err));
+// Prevent MongoDB connection during Jest test runs
+if (!process.env.JEST_WORKER_ID) {
+  mongoose
+    .connect(process.env.MONGO_URI)
+    .then(() => console.log("Connected to MongoDB Atlas"))
+    .catch((err) => console.error("MongoDB connection error:", err));
+}
 
 // CORS configuration
 app.use((req, res, next) => {
@@ -51,7 +54,8 @@ app.use(cookieParser());
 
 // Routing configuration
 app.use("/api", indexRouter);
-app.use("/api/inventory", listInventoryRoutes);  // GET /api/inventory
+app.use("/api/inventory", listInventoryRoutes); // GET /api/inventory
+app.use("/api/inventory", updateInventoryRoutes);
 app.use("/api/inventory", createInventoryRoutes); // POST /api/inventory
 app.use("/api/inventory", readInventoryRoutes);   // GET /api/inventory/:id
 
