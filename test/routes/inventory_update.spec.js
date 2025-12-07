@@ -10,13 +10,16 @@ const express = require("express");
 const mongoose = require("mongoose");
 const InventoryItem = require("../../src/models/inventory-item");
 const listInventoryRoutes = require("../../src/routes/list_inventory");
+const updateInventoryRoutes = require("../../src/routes/inventory_update");
 require("dotenv").config(); // loads .env
+let seededItemId; // will hold the _id of the seeded test item
 
 const app = express();
 app.use(express.json());
 
 // Mount the route being tested
 app.use("/api/inventory", listInventoryRoutes);
+app.use("/api/inventory", updateInventoryRoutes);
 
 /**
  * Connect to the test database and test insert one inventory item (separate from inventory_items collection).
@@ -25,20 +28,21 @@ app.use("/api/inventory", listInventoryRoutes);
 beforeAll(async () => {
   await mongoose.connect(process.env.MONGO_URI);
 
-  // Clear any previous data to avoid test pollution
+  // Clear existing records
   await InventoryItem.deleteMany();
 
-  // Insert a test record for validation
-  await InventoryItem.insertMany([
-    {
-      categoryId: 1000,
-      supplierId: 1,
-      name: "Test Item 1",
-      description: "Test description",
-      quantity: 10,
-      price: 199.99,
-    },
-  ]);
+  // Insert a test item and capture its _id
+  const seededItem = await InventoryItem.create({
+    categoryId: 1000,
+    supplierId: 1,
+    name: "Update Test Item",
+    description: "Original description",
+    quantity: 5,
+    price: 100.0,
+  });
+
+  // Store the id so tests can use it
+  seededItemId = seededItem._id.toString();
 });
 
 /**

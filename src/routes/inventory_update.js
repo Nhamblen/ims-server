@@ -1,7 +1,7 @@
 /**
  * Author: Noah Hamblen
- * Date: 24 November 2025
- * File: list_inventory.js
+ * Date: 6 December 2025
+ * File: inventory_update.js
  * Description: Routing for the list inventory page
  */
 
@@ -10,23 +10,31 @@ const router = express.Router();
 const InventoryItem = require("../models/inventory-item");
 
 /**
- * GET /
- * Returns all inventory items in the database.
- * This route is called from the Angular client when the user
- * navigates to the inventory list page.
+ * PUT /:id
+ * Updates an existing inventory item by its MongoDB _id.
+ * The request body can contain one or more fields to update.
  */
-router.get("/", async (req, res) => {
+router.put("/:id", async (req, res) => {
   try {
-    // Query the InventoryItem collection for all items
-    const items = await InventoryItem.find({});
+    const id = req.params.id; // The item ID from the URL
+    const update = req.body; // The fields to update
 
-    // Return the results as JSON with a 200 OK status
-    return res.status(200).json(items);
+    // Find the document by ID and apply the update.
+    // new: true returns the updated document.
+    const updatedItem = await InventoryItem.findByIdAndUpdate(id, update, {
+      new: true,
+      runValidators: true,
+    });
+
+    // If no document was found, return 404 Not Found
+    if (!updatedItem) {
+      return res.status(404).json({ message: "Inventory item not found" });
+    }
+
+    // Return the updated item with a 200 OK status
+    return res.status(200).json(updatedItem);
   } catch (err) {
-    // Log the error to the server console for debugging
-    console.error("Error fetching inventory items:", err);
-
-    // Return a 500 internal server error response
+    console.error("Error updating inventory item:", err);
     return res.status(500).json({ message: "Internal Server Error" });
   }
 });
