@@ -55,11 +55,11 @@ app.use(cookieParser());
 
 // Routing configuration
 app.use("/api", indexRouter);
+app.use("/api/inventory", searchInventoryRoutes);
 app.use("/api/inventory", listInventoryRoutes); // GET /api/inventory
 app.use("/api/inventory", updateInventoryRoutes);
 app.use("/api/inventory", createInventoryRoutes); // POST /api/inventory
 app.use("/api/inventory", readInventoryRoutes); // GET /api/inventory/:id
-app.use("/api/inventory", searchInventoryRoutes);
 
 // Use the error handling middleware
 app.use(notFoundHandler);
