@@ -9,20 +9,22 @@ const express = require("express");
 const router = express.Router();
 const InventoryItem = require("../models/inventory-item");
 
-// GET /api/inventory/search?name=laptop
 router.get("/search", async (req, res) => {
   try {
-    const name = req.query.name;
+    const { name, categoryId, supplierId } = req.query;
 
-    if (!name) {
-      return res.status(400).json({ message: "Search term required" });
+    const filter = {};
+
+    if (name) filter.name = new RegExp(name, "i"); // case-insensitive
+    if (categoryId) filter.categoryId = Number(categoryId);
+    if (supplierId) filter.supplierId = Number(supplierId);
+
+    if (Object.keys(filter).length === 0) {
+      return res.status(400).json({ message: "No search criteria provided." });
     }
 
-    const items = await InventoryItem.find({
-      name: { $regex: name, $options: "i" },
-    });
-
-    return res.status(200).json(items);
+    const results = await InventoryItem.find(filter);
+    return res.status(200).json(results);
   } catch (err) {
     console.error("Search error:", err);
     return res.status(500).json({ message: "Internal Server Error" });
