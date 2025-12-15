@@ -11,6 +11,7 @@ const cookieParser = require("cookie-parser");
 const logger = require("morgan");
 const { notFoundHandler, errorHandler } = require("./error-handler");
 const listInventoryRoutes = require("./routes/list_inventory");
+const listSupplierRoutes = require("./routes/list_supplier");
 const createInventoryRoutes = require("./routes/create_inventory");
 const readInventoryRoutes = require("./routes/read_inventory");
 const updateInventoryRoutes = require("./routes/inventory_update");
@@ -58,6 +59,7 @@ app.use(cookieParser());
 app.use("/api", indexRouter);
 app.use("/api/inventory", searchInventoryRoutes);
 app.use("/api/inventory", listInventoryRoutes); // GET /api/inventory
+app.use("/api/supplier", listSupplierRoutes); // GET /api/inventory
 app.use("/api/inventory", updateInventoryRoutes);
 app.use("/api/inventory", createInventoryRoutes); // POST /api/inventory
 app.use("/api/inventory", readInventoryRoutes); // GET /api/inventory/:id
