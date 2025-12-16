@@ -17,6 +17,7 @@ const readInventoryRoutes = require("./routes/read_inventory");
 const updateInventoryRoutes = require("./routes/inventory_update");
 const searchInventoryRoutes = require("./routes/search_inventory");
 const deleteInventoryRoutes = require("./routes/delete_inventory");
+const createSupplierRoutes = require("./routes/create_supplier");
 
 // Importing the index router
 const indexRouter = require("./routes/index");
@@ -65,6 +66,7 @@ app.use("/api/inventory", createInventoryRoutes); // POST /api/inventory
 app.use("/api/inventory", readInventoryRoutes); // GET /api/inventory/:id
 app.use("/api/inventory", readInventoryRoutes);
 app.use("/api/inventory", deleteInventoryRoutes); // DELETE /api/inventory/:id
+app.use("/api/supplier", createSupplierRoutes); // POST /api/supplier
 
 // Use the error handling middleware
 app.use(notFoundHandler);
