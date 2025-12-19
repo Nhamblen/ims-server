@@ -24,7 +24,7 @@ router.get("/:id", async (req, res) => {
       });
     }
 
-    // ✅ USE InventoryItem here
+    // USE InventoryItem here
     const item = await InventoryItem.findById(id);
 
     if (!item) {
