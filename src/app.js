@@ -20,13 +20,13 @@ const deleteInventoryRoutes = require("./routes/delete_inventory");
 const createSupplierRoutes = require("./routes/create_supplier");
 const cors = require("cors");
 
-app.use(cors());
-
 // Importing the index router
 const indexRouter = require("./routes/index");
 
 // Variable declaration for the express app
 let app = express();
+
+app.use(cors());
 
 const mongoose = require("mongoose");
 require("dotenv").config();
