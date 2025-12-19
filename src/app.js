@@ -75,5 +75,11 @@ app.use("/api/supplier", createSupplierRoutes); // POST /api/supplier
 app.use(notFoundHandler);
 app.use(errorHandler);
 
+const PORT = process.env.PORT || 3000;
+
+app.listen(PORT, () => {
+  console.log(`IMS server running on port ${PORT}`);
+});
+
 // Export the app
 module.exports = app;
