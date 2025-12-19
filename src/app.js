@@ -18,6 +18,9 @@ const updateInventoryRoutes = require("./routes/inventory_update");
 const searchInventoryRoutes = require("./routes/search_inventory");
 const deleteInventoryRoutes = require("./routes/delete_inventory");
 const createSupplierRoutes = require("./routes/create_supplier");
+import cors from "cors";
+
+app.use(cors());
 
 // Importing the index router
 const indexRouter = require("./routes/index");
